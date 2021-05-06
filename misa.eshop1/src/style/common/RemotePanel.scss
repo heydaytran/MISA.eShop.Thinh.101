@@ -1,0 +1,23 @@
+.right-content .remote-container {
+    height: 36px;
+    background-color: #2b3173;
+    display: flex;
+    align-items: center;
+}
+
+.button-remote:hover {
+    background: #6b6f9d;
+    cursor: pointer;
+}
+
+.button-remote {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 1px;
+    border-left: 1px solid #190472;
+}
+
+.remote-container .button-addCustomer {
+    border-left: 0px!important;
+}
