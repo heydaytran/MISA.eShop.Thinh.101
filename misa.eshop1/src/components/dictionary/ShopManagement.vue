@@ -222,14 +222,15 @@ export default {
     // },
 
     async getdata() {
-      await axios.get("http://localhost:35480/api/v1/Stores/Filter?storeName="+this.filter.filterStoreName
+
+       await axios.get("http://localhost:35480/api/v1/Stores/Filter?storeName="+this.filter.filterStoreName
       +"&storeCode="+this.filter.filterStoreCode
       +"&address="+this.filter.filterStoreAddress
       +"&phoneNumber="+this.filter.filterStorePhoneNumber
       +"&status="+this.filter.filterStoreStatus)
       .then((Response) => {
           this.stores = Response.data.data;
-          this.isLoaded = true;
+           this.isLoaded = true;
         });
     },
 
