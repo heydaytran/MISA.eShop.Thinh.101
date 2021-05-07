@@ -89,7 +89,7 @@
                   <div class="b-input input-phone">
                     <div class="label">Số điện thoại</div>
                     <input
-                      type="text"
+                      type="number"
                       class="text-phone"
                       v-model="store.phoneNumber"
                     />
@@ -601,6 +601,20 @@ export default {
 .hidden {
   opacity: 0;
 }
+
+
+  .dialog-content-bottom .text-phone::-webkit-outer-spin-button,
+.dialog-content-bottom .text-phone {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.text-phone::-webkit-outer-spin-button,
+.text-phone::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 </style>
 
 

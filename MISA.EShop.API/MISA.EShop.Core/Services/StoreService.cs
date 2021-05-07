@@ -85,11 +85,13 @@ namespace MISA.EShop.Core.Services
                 string storeName, 
                 string address, 
                 string phoneNumber, 
-                int? status)
+                int? status, 
+                int recordNumber,
+                int pageNumber)
         {
             var result = new ResponseResult();
 
-            var stores = _unitOfWork.Store.GetStoreFilter(storeCode, storeName, address, phoneNumber, status);
+            var stores = _unitOfWork.Store.GetStoreFilter(storeCode, storeName, address, phoneNumber, status,  recordNumber,  pageNumber);
 
             if (stores != null)
             {

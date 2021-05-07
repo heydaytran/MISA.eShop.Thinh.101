@@ -60,7 +60,10 @@ namespace MISA.EShop.WebAPI.Controllers
                     filterparams.storeName, 
                     filterparams.address, 
                     filterparams.phoneNumber, 
-                    filterparams.status);
+                    filterparams.status,
+                    filterparams.recordNumber,
+                    filterparams.pageNumber
+                    );
             }
             catch (Exception e)
             {

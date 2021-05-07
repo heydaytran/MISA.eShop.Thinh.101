@@ -31,5 +31,16 @@ namespace MISA.EShop.WebAPI
         /// Tình trạng của cửa hàng
         /// </summary>
         public int? status { get; set; }
+
+        /// <summary>
+        /// Số bản ghi trên 1 trang
+        /// </summary>
+        public int recordNumber { get; set; }
+
+        /// <summary>
+        /// Trường để đánh số cho trang
+        /// </summary>
+        public int pageNumber { get; set; }
+
     }
 }

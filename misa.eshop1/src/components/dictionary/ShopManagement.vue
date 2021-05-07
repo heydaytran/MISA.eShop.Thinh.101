@@ -44,8 +44,10 @@
 
           <div
             class="button-remote"
+            id="button-remove"
             style="display: flex"
             @click="showDeleteDialog()"
+            aria-disabled="true"
           >
             <span
               data-ref="btnIconEl"
@@ -165,19 +167,19 @@
           <div class="x-grid-footer toolbar">
             <div class="paging-toolbar">
               <div class="leftchild">
-                <div class="p-button first-page"></div>
-                <div class="p-button prev-page"></div>
+                <div class="p-button first-page" @click="paging.pageNumber = 1"></div>
+                <div class="p-button prev-page" @click="backPage()"></div>
                 <div style="margin: 0 16px 0 4px">Trang</div>
-                <input type="text" value="1" class="text-pagebumber" />
-                <div style="margin: 0 16px 0 6px">Trên 1</div>
+                <input type="number"  class="text-pagebumber" :value="paging.pageNumber"/>
+                <div style="margin: 0 16px 0 6px">Trên {{paging.amountPage}}</div>
 
-                <div class="p-button next-page"></div>
-                <div class="p-button last-page"></div>
-                <div class="p-button refresh"></div>
-                <select name="" id="" class="select-quantitypage">
-                  <option value="">25</option>
-                  <option value="">50</option>
-                  <option value="">100</option>
+                <div class="p-button next-page" @click="nextPage()"></div>
+                <div class="p-button last-page" @click="paging.pageNumber = paging.amountPage"></div>
+                <div class="p-button refresh" @click="getdata()"></div>
+                <select name="" id="" class="select-quantitypage" v-model="paging.recordNumber">
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
                 </select>
               </div>
               <div class="rightchild">
@@ -211,18 +213,9 @@ export default {
     ShopModalDelete,
   },
   methods: {
+
     // lấy dữ liệu các bản ghi shop
-    // async getdata() {
-    //   await axios
-    //     .get("http://localhost:35480/api/v1/Stores")
-    //     .then((Response) => {
-    //       this.stores = Response.data.data;
-    //       this.isLoaded = true;
-    //     });
-    // },
-
     async getdata() {
-
        await axios.get("http://localhost:35480/api/v1/Stores/Filter?storeName="+this.filter.filterStoreName
       +"&storeCode="+this.filter.filterStoreCode
       +"&address="+this.filter.filterStoreAddress
@@ -238,23 +231,8 @@ export default {
     showDetail: async function (shop) {
       //this.store = shop;
       this.store = Object.assign({}, shop);
-
-      // console.log(this.store, "a");
-      // await ((this.store.storeCode = shop.storeCode),
-      // (this.store.storeName = shop.storeName),
-      // (this.store.address = shop.address),
-      // (this.store.phoneNumber = shop.phoneNumber),
-      // (this.store.storeTaxCode = shop.storeTaxCode),
-      // (this.store.countryId = shop.countryId),
-      // (this.store.wardId = shop.wardId),
-      // (this.store.provinceId = shop.provinceId),
-      // (this.store.districtId = shop.districtId),
-      // (this.store.storeId = shop.storeId));
       this.$refs.ShopModalCreate_ref.showEditDialog();
-
       this.formMode = "edit";
-      // this.$refs.selectedCountry = this.store.countryId;
-      // this.$refs.selectedCity = this.store.provinceId;
     },
 
     show() {
@@ -312,6 +290,21 @@ export default {
           });
       }
     },
+
+    // hàm chuyển đến trang sau
+    nextPage(){
+      if(this.paging.pageNumber < this.paging.amountPage)
+      {
+        this.paging.pageNumber++
+      }
+    },
+     backPage(){
+      if(this.paging.pageNumber > 1)
+      {
+        this.paging.pageNumber--
+      }
+    },
+
   },
 
   data() {
@@ -341,7 +334,13 @@ export default {
         filterStoreAddress:"",
         filterStoreStatus:0,
         filterStorePhoneNumber:""
+      },
+      paging:{
+        amountPage:2,
+        pageNumber:1,
+        recordNumber:50
       }
+      
 
     };
   },

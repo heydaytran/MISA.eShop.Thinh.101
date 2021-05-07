@@ -35,7 +35,7 @@ namespace MISA.EShop.Core.Interfaces
         /// <param name="status">Trạng thái hoạt động</param>
         /// <returns>Danh sách cửa hàng tìm thấy</returns>
         /// CreatedBy: nctu 14.04.2021
-        IEnumerable<Store> GetStoreFilter(string storeCode, string storeName, string address, string phoneNumber, int? status);
+        IEnumerable<Store> GetStoreFilter(string storeCode, string storeName, string address, string phoneNumber, int? status, int recordNumber, int pageNumber);
 
         /// <summary>
         /// Lấy thông tin cửa hàng theo vị trí đầu vào và số lượng

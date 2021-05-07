@@ -38,7 +38,9 @@ namespace MISA.EShop.Infrastructure.Repository
             string storeName,
             string address,
             string phoneNumber,
-            int? status)
+            int? status,
+            int recordNumber, 
+            int pageNumber)
         {
             //var procName = $"Proc_GetStoreFilter";
             //var parameters = new DynamicParameters();
