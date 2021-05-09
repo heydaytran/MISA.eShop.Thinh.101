@@ -83,7 +83,12 @@
                       </div>
                       <div class="x-column-header-condition">
                         <a href="" class="condition-btn"></a>
-                        <input type="text" class="condition-text condition-storeCode" v-model="filter.filterStoreCode" @change="getdata()"/>
+                        <input
+                          type="text"
+                          class="condition-text condition-storeCode"
+                          v-model="filter.filterStoreCode"
+                          @change="getdata('filter')"
+                        />
                       </div>
                     </div>
                   </th>
@@ -94,7 +99,12 @@
                       </div>
                       <div class="x-column-header-condition">
                         <a href="" class="condition-btn"></a>
-                        <input type="text" class="condition-text codition-storeName" v-model="filter.filterStoreName" @change="getdata()"/>
+                        <input
+                          type="text"
+                          class="condition-text codition-storeName"
+                          v-model="filter.filterStoreName"
+                          @change="getdata('filter')"
+                        />
                       </div>
                     </div>
                   </th>
@@ -105,7 +115,12 @@
                       </div>
                       <div class="x-column-header-condition">
                         <a href="" class="condition-btn"></a>
-                        <input type="text" class="condition-text condition-address" v-model="filter.filterStoreAddress" @change="getdata()"/>
+                        <input
+                          type="text"
+                          class="condition-text condition-address"
+                          v-model="filter.filterStoreAddress"
+                          @change="getdata('filter')"
+                        />
                       </div>
                     </div>
                   </th>
@@ -116,7 +131,12 @@
                       </div>
                       <div class="x-column-header-condition">
                         <a href="" class="condition-btn"></a>
-                        <input type="text" class="condition-text condition-phone" v-model="filter.filterStorePhoneNumber" @change="getdata()"/>
+                        <input
+                          type="text"
+                          class="condition-text condition-phone"
+                          v-model="filter.filterStorePhoneNumber"
+                          @change="getdata('filter')"
+                        />
                       </div>
                     </div>
                   </th>
@@ -131,7 +151,7 @@
                           style="margin-left: 2px"
                           class="condition-text"
                           v-model="filter.filterStoreStatus"
-                          @change="getdata()"
+                          @change="getdata('filter')"
                         />
                       </div>
                     </div>
@@ -143,9 +163,9 @@
                 <div class="text">Đang nạp dữ liệu</div>
               </div>
 
-              <!-- <div  class="not-find">
-                  <i class="notify">Không tìm thấy kết quả</i>
-                </div> -->
+              <div class="not-find" v-show="notFindRecord">
+                <i class="notify">Không tìm thấy kết quả</i>
+              </div>
 
               <tbody>
                 <tr
@@ -167,16 +187,34 @@
           <div class="x-grid-footer toolbar">
             <div class="paging-toolbar">
               <div class="leftchild">
-                <div class="p-button first-page" @click="paging.pageNumber = 1"></div>
+                <div
+                  class="p-button first-page"
+                  @click="paging.pageNumber = 1"
+                ></div>
                 <div class="p-button prev-page" @click="backPage()"></div>
                 <div style="margin: 0 16px 0 4px">Trang</div>
-                <input type="number"  class="text-pagebumber" :value="paging.pageNumber"/>
-                <div style="margin: 0 16px 0 6px">Trên {{paging.amountPage}}</div>
+                <input
+                  type="number"
+                  class="text-pagebumber"
+                  v-model="paging.pageNumber"
+                />
+                <div style="margin: 0 16px 0 6px">
+                  Trên {{ paging.amountPage }}
+                </div>
 
                 <div class="p-button next-page" @click="nextPage()"></div>
-                <div class="p-button last-page" @click="paging.pageNumber = paging.amountPage"></div>
+                <div
+                  class="p-button last-page"
+                  @click="paging.pageNumber = paging.amountPage"
+                ></div>
                 <div class="p-button refresh" @click="getdata()"></div>
-                <select name="" id="" class="select-quantitypage" v-model="paging.recordNumber">
+                <select
+                  name=""
+                  id=""
+                  class="select-quantitypage"
+                  v-model="paging.recordNumber"
+                  @change="getdata('filter')"
+                >
                   <option value="25">25</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
@@ -184,7 +222,7 @@
               </div>
               <div class="rightchild">
                 <div class="noticenuber-paging">
-                  Hiển thị 1 - 6 trên 6 kết quả
+                  Hiển thị {{paging.startRecord}} - {{paging.endRecord}} trên {{paging.totalRecord}} kết quả
                 </div>
               </div>
             </div>
@@ -213,18 +251,53 @@ export default {
     ShopModalDelete,
   },
   methods: {
-
     // lấy dữ liệu các bản ghi shop
-    async getdata() {
-       await axios.get("http://localhost:35480/api/v1/Stores/Filter?storeName="+this.filter.filterStoreName
-      +"&storeCode="+this.filter.filterStoreCode
-      +"&address="+this.filter.filterStoreAddress
-      +"&phoneNumber="+this.filter.filterStorePhoneNumber
-      +"&status="+this.filter.filterStoreStatus)
-      .then((Response) => {
+    async getdata(text) {
+      var res = this
+      if (text == "filter") this.paging.pageNumber = 1;
+      await axios
+        .get(
+          "http://localhost:35480/api/v1/Stores/Filter?storeName=" +
+            this.filter.filterStoreName +
+            "&storeCode=" +
+            this.filter.filterStoreCode +
+            "&address=" +
+            this.filter.filterStoreAddress +
+            "&phoneNumber=" +
+            this.filter.filterStorePhoneNumber +
+            "&status=" +
+            this.filter.filterStoreStatus +
+            "&recordNumber=" +
+            this.paging.recordNumber +
+            "&pageNumber=" +
+            this.paging.pageNumber
+        )
+        .then((Response) => {
+          if (Response.data.data.length == 0) {
+            res.notFindRecord = true;
+             this.stores = []
+            return;
+          }
           this.stores = Response.data.data;
-           this.isLoaded = true;
-        });
+
+          this.paging.amountPage = Response.data.totalPage;
+          this.paging.totalRecord = Response.data.totalRecord
+          this.paging.startRecord = this.paging.pageNumber*this.paging.recordNumber - this.paging.recordNumber+1
+
+          if(this.paging.pageNumber < this.paging.amountPage)
+          {
+            this.paging.endRecord = this.paging.pageNumber * this.paging.recordNumber
+          }
+          else if(this.paging.pageNumber == this.paging.amountPage)
+          {
+            this.paging.endRecord = this.paging.totalRecord
+          }
+          this.isLoaded = true;
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+        
     },
 
     // hiển thị chi tiết bản ghi trên modal
@@ -292,19 +365,16 @@ export default {
     },
 
     // hàm chuyển đến trang sau
-    nextPage(){
-      if(this.paging.pageNumber < this.paging.amountPage)
-      {
-        this.paging.pageNumber++
+    nextPage() {
+      if (this.paging.pageNumber < this.paging.amountPage) {
+        this.paging.pageNumber++;
       }
     },
-     backPage(){
-      if(this.paging.pageNumber > 1)
-      {
-        this.paging.pageNumber--
+    backPage() {
+      if (this.paging.pageNumber > 1) {
+        this.paging.pageNumber--;
       }
     },
-
   },
 
   data() {
@@ -328,20 +398,22 @@ export default {
       formMode: "add",
       listSelectRow: [],
       isLoaded: false,
-      filter:{
-        filterStoreName:"",
-        filterStoreCode:"",
-        filterStoreAddress:"",
-        filterStoreStatus:0,
-        filterStorePhoneNumber:""
+      filter: {
+        filterStoreName: "",
+        filterStoreCode: "",
+        filterStoreAddress: "",
+        filterStoreStatus: 0,
+        filterStorePhoneNumber: "",
       },
-      paging:{
-        amountPage:2,
-        pageNumber:1,
-        recordNumber:50
-      }
-      
-
+      paging: {
+        amountPage: 2,
+        pageNumber: 1,
+        recordNumber: 50,
+        totalRecord:0,
+        startRecord:0,
+        endRecord:0
+      },
+      notFindRecord: false,
     };
   },
   created() {
@@ -476,5 +548,13 @@ export default {
       -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.5),
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.7), -1.8em -1.8em 0 0em #ffffff;
   }
+
 }
+
+.text-pagebumber::-webkit-outer-spin-button,
+.text-pagebumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 </style>

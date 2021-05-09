@@ -773,17 +773,7 @@ table td {
     cursor: pointer;
 }
 
-.ip-info-1 .area-address {
-    min-height: 80px;
-    width: 100%;
-    border: 1px solid #d0d0d0;
-    min-width: 457px;
-    margin-top: 10px;
-    border-radius: 4px;
-    outline: none;
-    padding: 0;
-    resize: none;
-}
+
 
 .ip-info-1 .area-address:focus {
     border: 1px solid #636dde;
@@ -845,7 +835,7 @@ table td {
     height: 491px;
     border-radius: 5px;
     position: absolute;
-    top: calc(50% - 300px);
-    left: calc(50% - 350px);
+    top: calc((100% - 491px)/2);
+    left: calc((100% - 596px)/2);
     border: 2px solid #e5e6e5;
 }

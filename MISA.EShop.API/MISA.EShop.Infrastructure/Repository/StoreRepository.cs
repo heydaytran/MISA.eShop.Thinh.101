@@ -3,11 +3,10 @@ using MISA.EShop.Core.Entities;
 using MISA.EShop.Core.Interfaces;
 using MISA.EShop.Core.Results;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.EShop.Infrastructure.Repository
 {
@@ -39,7 +38,7 @@ namespace MISA.EShop.Infrastructure.Repository
             string address,
             string phoneNumber,
             int? status,
-            int recordNumber, 
+            int recordNumber,
             int pageNumber)
         {
             //var procName = $"Proc_GetStoreFilter";
@@ -63,7 +62,7 @@ namespace MISA.EShop.Infrastructure.Repository
                 " and  PhoneNumber LIKE '%" + phoneNumber + "%'";
 
             var stores = _dbConnection
-                .Query<Store>(query,  commandType: CommandType.Text).OrderByDescending(s=>s.CreatedDate);
+                .Query<Store>(query, commandType: CommandType.Text).OrderByDescending(s => s.CreatedDate).ToList();
 
             return stores;
         }
@@ -78,23 +77,23 @@ namespace MISA.EShop.Infrastructure.Repository
             return entities;
         }
 
-        public EntittiesPaging<Store> GetStorePaging(int pageSize, int pageIndex)
-        {
-            var entitiesPaging = new EntittiesPaging<Store>();
-            var procName = "Proc_GetStorePaging";
-            var parameters = new DynamicParameters();
-            parameters.Add("@PageSize", pageSize);
-            parameters.Add("@PageIndex", pageIndex);
-            parameters.Add("@TotalRecord", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
-            parameters.Add("@TotalPage", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+        //public EntittiesPaging<Store> GetStorePaging(int pageSize, int pageIndex)
+        //{
+        //    var entitiesPaging = new EntittiesPaging<Store>();
+        //    var procName = "Proc_GetStorePaging";
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("@PageSize", pageSize);
+        //    parameters.Add("@PageIndex", pageIndex);
+        //    parameters.Add("@TotalRecord", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+        //    parameters.Add("@TotalPage", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
-            var listStore = _dbConnection.Query<Store>(procName, parameters, commandType: CommandType.StoredProcedure);
-            entitiesPaging.Data = listStore.ToList();
-            entitiesPaging.TotalRecord = parameters.Get<int>("@TotaRecord");
-            entitiesPaging.TotalPage = parameters.Get<int>("@TotalPage");
+        //    var listStore = _dbConnection.Query<Store>(procName, parameters, commandType: CommandType.StoredProcedure);
+        //    entitiesPaging.Data = listStore.ToList();
+        //    entitiesPaging.TotalRecord = parameters.Get<int>("@TotaRecord");
+        //    entitiesPaging.TotalPage = parameters.Get<int>("@TotalPage");
 
-            return entitiesPaging;
-        }
+        //    return entitiesPaging;
+        //}
 
 
         public bool CheckStoreCode(Guid? storeId, string storeCode, string functionName)

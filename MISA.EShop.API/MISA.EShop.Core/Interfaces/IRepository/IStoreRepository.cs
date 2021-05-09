@@ -53,7 +53,7 @@ namespace MISA.EShop.Core.Interfaces
         /// <param name="pageIndex">Chỉ số trang</param>
         /// <returns>Danh sách sửa hàng theo số lượng bản ghi và chỉ số trang truyền vào</returns>
         /// CreatedBy: nctu 20.04.2021
-        EntittiesPaging<Store> GetStorePaging(int pageSize, int pageIndex);
+        //EntittiesPaging<Store> GetStorePaging(int pageSize, int pageIndex);
 
         /// <summary>
         /// Check trùng mã cửa hàng khi insert hoặc update

@@ -49,7 +49,7 @@ namespace MISA.EShop.WebAPI.Controllers
 
         // PUT api/<BaseController>/5
         [HttpPut("{entityId}")]
-        public IActionResult Put(Guid entityId, [FromBody] T entity)
+        public IActionResult Put([FromRoute]Guid entityId, [FromBody] T entity)
         {
             var responseResult = _baseService.Update(entity, entityId);
             return Ok(responseResult);

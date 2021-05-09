@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MISA.EShop.Core.Results
 {
-    public class ResponseResult
+    public class ResponseResult: EntittiesPaging
     {
         // thông báo thao tác thành công hay thất bại, default là true
         public bool IsSuccess { get; set; } = true;
@@ -20,6 +20,7 @@ namespace MISA.EShop.Core.Results
 
         // mã code lỗi của thao tác, mặc định ban đầu là NONE - không có lỗi
         public ErrorCode ErrorCode { get; set; } = ErrorCode.NONE;
+     
 
         // thông tin tìm hiểu thêm cho dev
         public string MoreInfo { get; set; }
@@ -55,5 +56,8 @@ namespace MISA.EShop.Core.Results
             result.UserMsg = Resources.ResourceMessage.Error_Input;
         }
 
+
+        
+        
     }
 }

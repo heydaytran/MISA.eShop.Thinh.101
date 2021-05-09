@@ -40,3 +40,17 @@ C:\Users\tvthinh\Desktop\ThinhProject\MISA.EShop.API\MISA.EShop.Core\obj\Debug\n
 C:\Users\tvthinh\Desktop\ThinhProject\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.dll
 C:\Users\tvthinh\Desktop\ThinhProject\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\ref\MISA.EShop.Core.dll
 C:\Users\tvthinh\Desktop\ThinhProject\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.pdb
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\bin\Debug\net5.0\MISA.EShop.Core.deps.json
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\bin\Debug\net5.0\MISA.EShop.Core.dll
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\bin\Debug\net5.0\ref\MISA.EShop.Core.dll
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\bin\Debug\net5.0\MISA.EShop.Core.pdb
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.csprojAssemblyReference.cache
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.Resources.ResourceMessage.resources
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.csproj.GenerateResource.cache
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.AssemblyInfoInputs.cache
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.AssemblyInfo.cs
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.csproj.CoreCompileInputs.cache
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.dll
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\ref\MISA.EShop.Core.dll
+C:\Users\Admin\OneDrive\Desktop\MISA.eShop\MISA.eShop.Thinh.101\MISA.EShop.API\MISA.EShop.Core\obj\Debug\net5.0\MISA.EShop.Core.pdb

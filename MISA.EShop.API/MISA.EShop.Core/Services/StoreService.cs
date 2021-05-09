@@ -91,14 +91,40 @@ namespace MISA.EShop.Core.Services
         {
             var result = new ResponseResult();
 
-            var stores = _unitOfWork.Store.GetStoreFilter(storeCode, storeName, address, phoneNumber, status,  recordNumber,  pageNumber);
+            var stores = _unitOfWork.Store.GetStoreFilter(storeCode, storeName, address, phoneNumber, status,  recordNumber,  pageNumber).ToList();
 
-            if (stores != null)
+            List<Store> b = new List<Store>();
+
+            // tính ra tổng số trang dựa trên tổng số bản ghi
+            int totlaPage = 1;
+            if (stores.Count % recordNumber != 0)
             {
-                result.Data = stores;
+
+                totlaPage = stores.Count / recordNumber + 1;
+            }
+
+
+            int limit;
+            if (recordNumber * pageNumber > stores.Count)
+            {
+                limit = stores.Count;
+
+            }
+            else limit = recordNumber * pageNumber;
+
+            for (int i = recordNumber * pageNumber - recordNumber; i < limit; i++)
+            {
+                b.Add(stores[i]);
+            }
+
+            if (b != null)
+            {
+                result.Data = b;
                 result.IsSuccess = true;
                 result.ErrorCode = Enum.ErrorCode.NONE;
                 result.UserMsg = Resources.ResourceMessage.Get_Success;
+                result.TotalPage = totlaPage;
+                result.TotalRecord = stores.Count;
             }
             else
             {
@@ -134,7 +160,7 @@ namespace MISA.EShop.Core.Services
         public ResponseResult GetStorePaging(int pageSize, int pageIndex)
         {
             var result = new ResponseResult();
-            var pagingResult = _unitOfWork.Store.GetStorePaging(pageSize, pageIndex);
+            Store pagingResult = null;
 
             if (pagingResult != null)
             {
