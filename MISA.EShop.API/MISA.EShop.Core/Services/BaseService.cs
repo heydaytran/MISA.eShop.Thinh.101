@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MISA.EShop.Core.Entities;
+using System.ComponentModel;
 
 namespace MISA.EShop.Core.Services
 {
@@ -52,21 +53,28 @@ namespace MISA.EShop.Core.Services
 
         public ResponseResult GetEntities()
         {
-            var entities = _baseRespository.GetEntities();
-
             var result = new ResponseResult();
-            if (entities != null)
+            try
             {
-                result.Data = entities;
-                result.ErrorCode = Enum.ErrorCode.NONE;
-                result.UserMsg = Resources.ResourceMessage.Get_Success;
+                var entities = _baseRespository.GetEntities();
+
+                if (entities != null)
+                {
+                    result.Data = entities;
+                    result.ErrorCode = Enum.ErrorCode.NONE;
+                    result.UserMsg = Resources.ResourceMessage.Get_Success;
+                }
+                else
+                {
+                    result.IsSuccess = false;
+                    result.UserMsg = Resources.ResourceMessage.NotFound;
+                    result.DevMsg = Resources.ResourceMessage.NoContent;
+                    result.ErrorCode = Enum.ErrorCode.NOCONTENT;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                result.IsSuccess = false;
-                result.UserMsg = Resources.ResourceMessage.NotFound;
-                result.DevMsg = Resources.ResourceMessage.NoContent;
-                result.ErrorCode = Enum.ErrorCode.NOCONTENT;
+                result.OnException(result, ex); 
             }
 
             return result;
@@ -76,7 +84,7 @@ namespace MISA.EShop.Core.Services
         {
             var result = new ResponseResult();
             string functionName = "Insert";
-            
+
             // Validate nghiệp vụ
             Validate(result, entity, null, functionName);
 
@@ -166,44 +174,44 @@ namespace MISA.EShop.Core.Services
         /// <param name="entity"></param>
         public virtual void Validate(ResponseResult responseResult, T entity, Guid? entityID, string functionName)
         {
-            /* var properties = typeof(T).GetProperties();
-            foreach(var property in properties)
+            var properties = typeof(T).GetProperties();
+
+            foreach (var property in properties)
             {
                 var propValue = property.GetValue(entity);
+                var displayName = property.GetCustomAttributes(typeof(DisplayNameAttribute), true).FirstOrDefault();
 
-                if(propValue == null || propValue.ToString() == string.Empty)
+                if (property.IsDefined(typeof(RequiredAttribute), false))
                 {
                     // nếu là trường required thì đưa ra thông báo lỗi
-                    if(property.IsDefined(typeof(RequiredAttribute), true))
+                    if (propValue == null || propValue.ToString() == string.Empty)
                     {
-                        var displayName = property
-                            .GetCustomAttributes(typeof(RequiredAttribute), false)
-                            .OfType<DisplayAttribute>().FirstOrDefault();
-                        responseResult.IsSuccess = false;
-                        responseResult.ErrorCode = Enum.ErrorCode.BADREQUEST;
-                        responseResult.DevMsg = displayName.Name + " " + Resources.ResourceMessage.Error_Required;
-                        responseResult.UserMsg = displayName.Name + " " + Resources.ResourceMessage.Error_Required;
+                            
+                        //responseResult.IsSuccess = false;
+                        //responseResult.ErrorCode = Enum.ErrorCode.BADREQUEST;
+                        //responseResult.DevMsg = displayName.Name + " " + Resources.ResourceMessage.Error_Required;
+                        responseResult.UserMsg = displayName + " " + Resources.ResourceMessage.Error_Required;
                     }
                 }
-                else
-                {
-                    // kiểm tra xem trường nào là duy nhất (có thuộc tính Unique) thì check duplicate
-                    if(property.IsDefined(typeof(Unique), false))
-                    {
-                        bool checkDuplicateCode = _baseRespository.CheckDuplicateEntityCode(entity, entityID, functionName);
-                        if (checkDuplicateCode)
-                        {
-                            var displayName = property
-                            .GetCustomAttributes(typeof(Unique), false)
-                            .OfType<DisplayAttribute>().FirstOrDefault();
-                            responseResult.IsSuccess = false;
-                            responseResult.ErrorCode = Enum.ErrorCode.BADREQUEST;
-                            responseResult.DevMsg = displayName.Name + " " + Resources.ResourceMessage.Error_Duplicate;
-                            responseResult.UserMsg = displayName.Name + " " + Resources.ResourceMessage.Error_Duplicate;
-                        }
-                    }
-                }
-            }*/
+                //else
+                //{
+                //    // kiểm tra xem trường nào là duy nhất (có thuộc tính Unique) thì check duplicate
+                //    if (property.IsDefined(typeof(Unique), false))
+                //    {
+                //        bool checkDuplicateCode = _baseRespository.CheckDuplicateEntityCode(entity, entityID, functionName);
+                //        if (checkDuplicateCode)
+                //        {
+                //            var displayName = property
+                //            .GetCustomAttributes(typeof(Unique), false)
+                //            .OfType<DisplayAttribute>().FirstOrDefault();
+                //            responseResult.IsSuccess = false;
+                //            responseResult.ErrorCode = Enum.ErrorCode.BADREQUEST;
+                //            responseResult.DevMsg = displayName.Name + " " + Resources.ResourceMessage.Error_Duplicate;
+                //            responseResult.UserMsg = displayName.Name + " " + Resources.ResourceMessage.Error_Duplicate;
+                //        }
+                //    }
+                //}
+            }
 
 
         }

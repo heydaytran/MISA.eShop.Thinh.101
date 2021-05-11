@@ -182,38 +182,38 @@ namespace MISA.EShop.Core.Services
         /// </summary>
         /// <param name="responseResult">Kết quả trả về xem có </param>
         /// <param name="entity"></param>
-        public override void Validate(ResponseResult responseResult, Store entity, Guid? entityID, string functionName)
-        {
-            var propertyUnique = "Mã cửa hàng";
-            var propertyRequired = new Dictionary<string, string>();
-            propertyRequired.Add("Mã cửa hàng", entity.StoreCode);
-            propertyRequired.Add("Tên cửa hàng", entity.StoreName);
-            propertyRequired.Add("Địa chỉ", entity.Address);
+        //public override void Validate(ResponseResult responseResult, Store entity, Guid? entityID, string functionName)
+        //{
+        //    var propertyUnique = "Mã cửa hàng";
+        //    var propertyRequired = new Dictionary<string, string>();
+        //    propertyRequired.Add("Mã cửa hàng", entity.StoreCode);
+        //    propertyRequired.Add("Tên cửa hàng", entity.StoreName);
+        //    propertyRequired.Add("Địa chỉ", entity.Address);
 
-            foreach (var property in propertyRequired)
-            {
-                if (string.IsNullOrEmpty(property.Value))
-                {
-                    responseResult.IsSuccess = false;
-                    responseResult.ErrorCode = Enum.ErrorCode.BADREQUEST;
-                    responseResult.DevMsg = property.Key + " " + Resources.ResourceMessage.Error_Required;
-                    responseResult.UserMsg = property.Key + " " + Resources.ResourceMessage.Error_Required;
-                }
-            }
+        //    foreach (var property in propertyRequired)
+        //    {
+        //        if (string.IsNullOrEmpty(property.Value))
+        //        {
+        //            responseResult.IsSuccess = false;
+        //            responseResult.ErrorCode = Enum.ErrorCode.BADREQUEST;
+        //            responseResult.DevMsg = property.Key + " " + Resources.ResourceMessage.Error_Required;
+        //            responseResult.UserMsg = property.Key + " " + Resources.ResourceMessage.Error_Required;
+        //        }
+        //    }
 
-            // kiểm tra xem trường nào là duy nhất (có thuộc tính Unique) thì check duplicate
+        //    // kiểm tra xem trường nào là duy nhất (có thuộc tính Unique) thì check duplicate
 
-            bool checkDuplicateCode = _unitOfWork.Store.CheckStoreCode(entityID, entity.StoreCode, functionName);
+        //    bool checkDuplicateCode = _unitOfWork.Store.CheckStoreCode(entityID, entity.StoreCode, functionName);
 
-            if (checkDuplicateCode)
-            {
-                responseResult.IsSuccess = false;
-                responseResult.ErrorCode = Enum.ErrorCode.BADREQUEST;
-                responseResult.DevMsg = propertyUnique + " " + Resources.ResourceMessage.Error_Duplicate;
-                responseResult.UserMsg = propertyUnique + " " + Resources.ResourceMessage.Error_Duplicate;
-            }
+        //    if (checkDuplicateCode)
+        //    {
+        //        responseResult.IsSuccess = false;
+        //        responseResult.ErrorCode = Enum.ErrorCode.BADREQUEST;
+        //        responseResult.DevMsg = propertyUnique + " " + Resources.ResourceMessage.Error_Duplicate;
+        //        responseResult.UserMsg = propertyUnique + " " + Resources.ResourceMessage.Error_Duplicate;
+        //    }
 
-        }
+        //}
     }
 
 }

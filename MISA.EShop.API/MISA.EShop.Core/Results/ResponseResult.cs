@@ -55,9 +55,5 @@ namespace MISA.EShop.Core.Results
             result.DevMsg = Resources.ResourceMessage.Error_Input;
             result.UserMsg = Resources.ResourceMessage.Error_Input;
         }
-
-
-        
-        
     }
 }
